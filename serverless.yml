@@ -45,16 +45,16 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.INGESTA_BUCKET}
-    PoliticaS3IngestaComentarios:
-      Type: AWS::IAM::Policy
+    BucketPolicyIngestaComentarios:
+      Type: AWS::S3::BucketPolicy
       Properties:
-        PolicyName: ${sls:stage}-comentarios-ingesta-s3-policy
-        Roles:
-          - LabRole
+        Bucket: ${self:provider.environment.INGESTA_BUCKET}
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
             - Effect: Allow
+              Principal:
+                AWS: arn:aws:iam::654654146117:role/LabRole
               Action:
                 - s3:PutObject
               Resource:
